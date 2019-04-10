@@ -1,0 +1,26 @@
+{
+  "name": "fast-driver",
+  "version": "0.0.1",
+  "description": "Wrapper for common WebdriverIO calls typically used with Appium to reduce typing. One reason this is useful is that WinAppDriver does not support the abbreviated selector syntax.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hankbot/fast-driver.git"
+  },
+  "keywords": [
+    "WebdriverIO",
+    "Appium"
+  ],
+  "author": "Matthew Henry Kiedrowski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hankbot/fast-driver/issues"
+  },
+  "homepage": "https://github.com/hankbot/fast-driver#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  }
+}
