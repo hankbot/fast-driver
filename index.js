@@ -53,6 +53,9 @@ module.exports = fastDriver = {
     return this._processFind(el);
   },
 
+  // Alias
+  access: this.auto,
+
   /**
    * Find element by class name
    * ClassName attribute in Windows
@@ -74,6 +77,9 @@ module.exports = fastDriver = {
     const el = this.driver.findElement('id', id);
     return this._processFind(el);
   },
+
+  // Alias
+  id: this.run,
 
   /**
    * Find element by name
@@ -97,6 +103,9 @@ module.exports = fastDriver = {
     return this._processFind(el);
   },
 
+  // Alias
+  tag: this.type,
+
   /**
    * Returns the value for the specified attribute
    * @param {String} attr 
@@ -104,7 +113,7 @@ module.exports = fastDriver = {
    */
   getAttribute: function (attr) {
     if (this.ELEMENT === null) { return; }
-    return v = this.driver.getElementAttribute(this.ELEMENT);
+    return v = this.driver.getElementAttribute(this.ELEMENT, attr);
   },
 
   /**
