@@ -1,17 +1,26 @@
-module.exports = {
+module.exports = fastDriver = {
+  // By default global.driver is used, set altDriver to mock or be more explicit
+  altDriver: null,
+
+  driver: this.altDriver || global.driver, 
+
   /**
    * Full response from the last succesful find* call
-   * Cleared out on unsuccessful result
+   * Cleared out on unsuccessful or empty result
    */
   findResponse: null,
 
   /**
-   * RuntimeId of the last succesful find* call
-   * Cleared out on unsuccessful result
+   * ID/RuntimeId of the last succesful find* call
+   * Cleared out on unsuccessful or empty result
    */
   ELEMENT: null,
 
-  clearElement: function () {
+  /**
+   * Clears out the stored result for find* calls
+   * @returns {void}
+   */
+  _clearFind: function () {
     this.ELEMENT = null;
     this.runtimeId = null;
   },
@@ -19,10 +28,11 @@ module.exports = {
   /**
    * Internal method to process the response from find* calls
    * @param {String} el 
+   * @returns {Object} this
    */
   _processFind: function (el) {
     if (typeof el.ELEMENT === 'undefined') {
-      this.clearElement();
+      this._clearFind();
       return this;
     }
 
@@ -35,45 +45,75 @@ module.exports = {
   /**
    * Find element by accessability id 
    * AutomationId attribute in Windows
-   * @param {String} s 
+   * @param {String} id 
+   * @returns {Object} this
    */
-  auto: function (s) {
-    const el = driver.findElement('accessibility id', s);
+  auto: function (id) {
+    const el = driver.findElement('accessibility id', id);
     return this._processFind(el);
   },
 
-  // ClassName
-  class: function (s) {
-    driver.findElement('class name', s);
+  /**
+   * Find element by class name
+   * ClassName attribute in Windows
+   * @param {String} name
+   * @returns {Object} this
+   */
+  class: function (className) {
+    const el = this.driver.findElement('class name', className);
+    return this._processFind(el);
   },
 
-  // RuntimeId
-  run: function (s) {
-    driver.findElement('id', s);
+  /**
+    * Find element by id
+    * RuntimeId attribute in Windows
+    * @param {String} id
+    * @returns {Object} this
+  */
+  run: function (id) {
+    const el = this.driver.findElement('id', id);
+    return this._processFind(el);
   },
 
   /**
    * Find element by name
    * Name attribute in Windows
-   * @param {String} s
+   * @param {String} name
+   * @returns {Object} this
    */
-  name: function (s) {
-    const el = driver.findElement('name', s);
+  name: function (name) {
+    const el = this.driver.findElement('name', name);
     return this._processFind(el);
   },
 
-  // LocalizedControlType
-  type: function (s) {
-    driver.findElement('tag name', s);
+  /**
+   * Find element by tag name
+   * LocalizedControlType attribute in Windows
+   * @param {String} tagName
+   * @returns {Object} this
+   */
+  type: function (tagName) {
+    const el = this.driver.findElement('tag name', tagName);
+    return this._processFind(el);
   },
 
-  getAttribute: function (element) {
-
+  /**
+   * Returns the value for the specified attribute
+   * @param {String} attr 
+   * @returns {any} The attribute value
+   */
+  getAttribute: function (attr) {
+    if (this.ELEMENT === null) { return; }
+    return v = this.driver.getElementAttribute(this.ELEMENT);
   },
 
+  /**
+   * If a single element has been located, click it
+   * @returns {Object} this
+   */
   click: function () {
     if (!this.ELEMENT) { return; }
-    driver.elementClick(this.ELEMENT);
+    this.driver.elementClick(this.ELEMENT);
     return this;
   },
 
