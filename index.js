@@ -1,4 +1,5 @@
-module.exports = fastDriver = {
+/* eslint-disable no-underscore-dangle */
+module.exports = {
   // By default global.driver is used, set altDriver to mock or be more explicit
   altDriver: null,
 
@@ -20,7 +21,7 @@ module.exports = fastDriver = {
    * Clears out the stored result for find* calls
    * @returns {void}
    */
-  _clearFind: function() {
+  _clearFind() {
     this.ELEMENT = null;
     this.runtimeId = null;
   },
@@ -30,7 +31,7 @@ module.exports = fastDriver = {
    * @param {String} el
    * @returns {Object} this
    */
-  _processFind: function(el) {
+  _processFind(el) {
     if (typeof el.ELEMENT === 'undefined') {
       this._clearFind();
       return this;
@@ -48,7 +49,7 @@ module.exports = fastDriver = {
    * @param {String} id
    * @returns {Object} this
    */
-  atmtn: function(id) {
+  atmtn(id) {
     const el = driver.findElement('accessibility id', id);
     return this._processFind(el);
   },
@@ -62,7 +63,7 @@ module.exports = fastDriver = {
    * @param {String} name
    * @returns {Object} this
    */
-  class: function(className) {
+  class(className) {
     const el = this.driver.findElement('class name', className);
     return this._processFind(el);
   },
@@ -73,7 +74,7 @@ module.exports = fastDriver = {
    * @param {String} id
    * @returns {Object} this
    */
-  run: function(id) {
+  run(id) {
     const el = this.driver.findElement('id', id);
     return this._processFind(el);
   },
@@ -87,7 +88,7 @@ module.exports = fastDriver = {
    * @param {String} name
    * @returns {Object} this
    */
-  name: function(name) {
+  name(name) {
     const el = this.driver.findElement('name', name);
     return this._processFind(el);
   },
@@ -98,7 +99,7 @@ module.exports = fastDriver = {
    * @param {String} tagName
    * @returns {Object} this
    */
-  type: function(tagName) {
+  type(tagName) {
     const el = this.driver.findElement('tag name', tagName);
     return this._processFind(el);
   },
@@ -111,20 +112,23 @@ module.exports = fastDriver = {
    * @param {String} attr
    * @returns {any} The attribute value
    */
-  getAttribute: function(attr) {
+  getAttribute(attr) {
     if (this.ELEMENT === null) {
-      return;
+      const err = new Error('Could not getAttribute, element was not set');
+      console.error(err);
+      return null;
     }
-    return (v = this.driver.getElementAttribute(this.ELEMENT, attr));
+    return this.driver.getElementAttribute(this.ELEMENT, attr);
   },
 
   /**
    * If a single element has been located, click it
    * @returns {Object} this
    */
-  click: function() {
+  click() {
     if (!this.ELEMENT) {
-      return;
+      const err = new Error('Could not locate element, click was not attempted');
+      console.error(err);
     }
     this.driver.elementClick(this.ELEMENT);
     return this;
