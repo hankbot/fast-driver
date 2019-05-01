@@ -2,7 +2,7 @@ module.exports = fastDriver = {
   // By default global.driver is used, set altDriver to mock or be more explicit
   altDriver: null,
 
-  driver: this.altDriver || global.driver, 
+  driver: this.altDriver || global.driver,
 
   /**
    * Full response from the last succesful find* call
@@ -20,17 +20,17 @@ module.exports = fastDriver = {
    * Clears out the stored result for find* calls
    * @returns {void}
    */
-  _clearFind: function () {
+  _clearFind: function() {
     this.ELEMENT = null;
     this.runtimeId = null;
   },
 
   /**
    * Internal method to process the response from find* calls
-   * @param {String} el 
+   * @param {String} el
    * @returns {Object} this
    */
-  _processFind: function (el) {
+  _processFind: function(el) {
     if (typeof el.ELEMENT === 'undefined') {
       this._clearFind();
       return this;
@@ -43,18 +43,18 @@ module.exports = fastDriver = {
   },
 
   /**
-   * Find element by accessability id 
+   * Find element by accessability id
    * AutomationId attribute in Windows
-   * @param {String} id 
+   * @param {String} id
    * @returns {Object} this
    */
-  auto: function (id) {
+  atmtn: function(id) {
     const el = driver.findElement('accessibility id', id);
     return this._processFind(el);
   },
 
   // Alias
-  access: this.auto,
+  access: this.atmtn,
 
   /**
    * Find element by class name
@@ -62,18 +62,18 @@ module.exports = fastDriver = {
    * @param {String} name
    * @returns {Object} this
    */
-  class: function (className) {
+  class: function(className) {
     const el = this.driver.findElement('class name', className);
     return this._processFind(el);
   },
 
   /**
-    * Find element by id
-    * RuntimeId attribute in Windows
-    * @param {String} id
-    * @returns {Object} this
-  */
-  run: function (id) {
+   * Find element by id
+   * RuntimeId attribute in Windows
+   * @param {String} id
+   * @returns {Object} this
+   */
+  run: function(id) {
     const el = this.driver.findElement('id', id);
     return this._processFind(el);
   },
@@ -87,7 +87,7 @@ module.exports = fastDriver = {
    * @param {String} name
    * @returns {Object} this
    */
-  name: function (name) {
+  name: function(name) {
     const el = this.driver.findElement('name', name);
     return this._processFind(el);
   },
@@ -98,7 +98,7 @@ module.exports = fastDriver = {
    * @param {String} tagName
    * @returns {Object} this
    */
-  type: function (tagName) {
+  type: function(tagName) {
     const el = this.driver.findElement('tag name', tagName);
     return this._processFind(el);
   },
@@ -108,22 +108,25 @@ module.exports = fastDriver = {
 
   /**
    * Returns the value for the specified attribute
-   * @param {String} attr 
+   * @param {String} attr
    * @returns {any} The attribute value
    */
-  getAttribute: function (attr) {
-    if (this.ELEMENT === null) { return; }
-    return v = this.driver.getElementAttribute(this.ELEMENT, attr);
+  getAttribute: function(attr) {
+    if (this.ELEMENT === null) {
+      return;
+    }
+    return (v = this.driver.getElementAttribute(this.ELEMENT, attr));
   },
 
   /**
    * If a single element has been located, click it
    * @returns {Object} this
    */
-  click: function () {
-    if (!this.ELEMENT) { return; }
+  click: function() {
+    if (!this.ELEMENT) {
+      return;
+    }
     this.driver.elementClick(this.ELEMENT);
     return this;
   },
-
 };
