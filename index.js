@@ -114,8 +114,6 @@ module.exports = {
    */
   getAttribute(attr) {
     if (this.ELEMENT === null) {
-      const err = new Error('Could not getAttribute, element was not set');
-      console.error(err);
       return null;
     }
     return this.driver.getElementAttribute(this.ELEMENT, attr);
@@ -127,8 +125,7 @@ module.exports = {
    */
   click() {
     if (!this.ELEMENT) {
-      const err = new Error('Could not locate element, click was not attempted');
-      console.error(err);
+      return null;
     }
     this.driver.elementClick(this.ELEMENT);
     return this;
