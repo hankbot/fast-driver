@@ -130,4 +130,11 @@ module.exports = {
     this.driver.elementClick(this.ELEMENT);
     return this;
   },
+  moveTo(x, y) {
+    if (!this.ELEMENT) {
+      return null;
+    }
+    this.driver.moveToElement(this.ELEMENT, x, y);
+    return this;
+  },
 };
