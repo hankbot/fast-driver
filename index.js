@@ -8,11 +8,13 @@ module.exports = {
   /**
    * Full response from the last succesful find* call
    * Cleared out on unsuccessful or empty result
+   *
+   * This value will be null if this.element is set using this.el
    */
   findResponse: null,
 
   /**
-   * ID/RuntimeId of the last succesful find* call
+   * ID of the last succesful find* call
    * Cleared out on unsuccessful or empty result
    */
   ELEMENT: null,
@@ -23,7 +25,6 @@ module.exports = {
    */
   _clearFind() {
     this.ELEMENT = null;
-    this.runtimeId = null;
   },
 
   /**
@@ -40,6 +41,20 @@ module.exports = {
     this.findResponse = el;
     this.ELEMENT = el.ELEMENT;
 
+    return this;
+  },
+
+  /**
+   * Sets this.ELEMENT directly, usfule for accessing the chained functions when the element id
+   * has be located through means outside of the built-in functionality
+   *
+   * this.findResponse will be set to null since the element was not located internally
+   *
+   * @param {String} this.ELEMENT is set to the given value
+   */
+  el(elId) {
+    this.ELEMENT = elId;
+    this.findResponse = null;
     return this;
   },
 
