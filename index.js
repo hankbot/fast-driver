@@ -6,7 +6,7 @@ module.exports = {
   driver: this.altDriver || global.driver,
 
   /**
-   * Full response from the last succesful find* call
+   * Full response from the last successful find* call
    * Cleared out on unsuccessful or empty result
    *
    * This value will be null if this.element is set using this.el
@@ -14,7 +14,7 @@ module.exports = {
   findResponse: null,
 
   /**
-   * ID of the last succesful find* call
+   * ID of the last successful find* call
    * Cleared out on unsuccessful or empty result
    */
   ELEMENT: null,
@@ -45,7 +45,7 @@ module.exports = {
   },
 
   /**
-   * Sets this.ELEMENT directly, usfule for accessing the chained functions when the element id
+   * Sets this.ELEMENT directly, useful for accessing the chained functions when the element id
    * has be located through means outside of the built-in functionality
    *
    * this.findResponse will be set to null since the element was not located internally
